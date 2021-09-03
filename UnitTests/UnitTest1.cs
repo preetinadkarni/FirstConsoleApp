@@ -5,17 +5,19 @@ namespace UnitTests
 {
     public class Tests
     {
+        private StringCalculator _sc;
+        
         [SetUp]
         public void Setup()
         {
-            var sc = new StringCalculator();
+           _sc = new StringCalculator();
         }
 
         [Test]
-        public void Test1()
+        public void GivenInputIsBlankWhenAddThenReturnsZero()
         {
-            sc.input = "";
-            Assert.Equals(sc.Add(input),0);
+            _sc.input = "";
+            Assert.AreEqual(_sc.Add(_sc.input),0);
         }
     }
 }
