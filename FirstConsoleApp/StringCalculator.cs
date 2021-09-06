@@ -1,18 +1,18 @@
 using System.Net.Sockets;
+using System;
 
 namespace FirstConsoleApp
 {
     public class StringCalculator
     {
-        public string input;
         public StringCalculator()
         {
-            input = "";
         }
 
-        public int Add( string input)
+        public int Add(string input)
         {
-            return 0;
+            if (input == "") return 0;
+            return Convert.ToInt32(input);
         }
     }
 }
