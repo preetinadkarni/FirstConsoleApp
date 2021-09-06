@@ -12,7 +12,20 @@ namespace FirstConsoleApp
         public int Add(string input)
         {
             if (input == "") return 0;
-            return Convert.ToInt32(input);
+            string[] numbers = input.Split(",");
+            int sum = 0;
+            foreach (var item in numbers)
+            {
+                bool isNumber = int.TryParse(item, out int result);
+                if (!isNumber)
+                {
+                    return 0;
+                }
+
+                sum = sum + result;
+            }
+            
+            return sum;
         }
     }
 }
