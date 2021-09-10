@@ -22,7 +22,7 @@ namespace FirstConsoleApp
                     return 0;
                 }
 
-                sum = sum + result;
+                sum += result;
             }
             
             return sum;
