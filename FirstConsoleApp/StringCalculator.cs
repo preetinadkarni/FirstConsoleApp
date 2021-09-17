@@ -12,7 +12,7 @@ namespace FirstConsoleApp
         public int Add(string input)
         {
             if (input == "") return 0;
-            string[] numbers = input.Split(",");
+            string[] numbers = input.Split(',','\n');
             int sum = 0;
             foreach (var item in numbers)
             {
