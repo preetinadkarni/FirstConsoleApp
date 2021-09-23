@@ -31,14 +31,14 @@ namespace UnitTests
         [TestCase("3,5", ExpectedResult=8)]
         [TestCase("1,2,3", ExpectedResult=6)]
         [TestCase("3,5,3,9", ExpectedResult=20)]
-        public int GivenInputIsAmountOfNumbersWhenAddThenReturnsSumOfNumbers(string input)
+        public int GivenInputHasCommaSeparatedNumbersWhenAddThenReturnsSumOfNumbers(string input)
         {
             return _stringCalculator.Add(input);
         }
         
         [TestCase("1,2\n3", ExpectedResult=6)]
         [TestCase("3\n5\n3,9", ExpectedResult=20)]
-        public int GivenInputHasLineBreaksOrCommashenAddThenReturnsSumOfNumbers(string input)
+        public int GivenInputHasLineBreaksOrCommasSeparatedNumbersWhenAddThenReturnsSumOfNumbers(string input)
         {
             return _stringCalculator.Add(input);
         }
