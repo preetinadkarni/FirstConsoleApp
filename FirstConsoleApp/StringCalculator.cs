@@ -12,7 +12,8 @@ namespace FirstConsoleApp
         public int Add(string input)
         {
             if (input == "") return 0;
-            string[] numbers = input.Split(",");
+            char[] separators = {',' , '\n' };
+            string[] numbers = input.Split(separators);
             int sum = 0;
             foreach (var item in numbers)
             {
@@ -22,7 +23,7 @@ namespace FirstConsoleApp
                     return 0;
                 }
 
-                sum = sum + result;
+                sum += result;
             }
             
             return sum;
