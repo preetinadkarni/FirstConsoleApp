@@ -1,5 +1,6 @@
 using System.Net.Sockets;
 using System;
+using System.Linq;
 
 namespace FirstConsoleApp
 {
@@ -17,10 +18,10 @@ namespace FirstConsoleApp
             if (input == "") return 0;
             if (input.StartsWith("//"))
             {
-                string numbersList = input.Substring(4, 3);
-                Console.Write(numbersList);
-
-                numbers = numbersList.Split(';');
+                string separator = input.Substring(2,1);
+                int startIndex = input.IndexOf('\n') + 1;
+                string numbersList = input.Substring( startIndex);
+                numbers = numbersList.Split(separator);
             }
             else
             {
