@@ -11,10 +11,23 @@ namespace FirstConsoleApp
 
         public int Add(string input)
         {
-            if (input == "") return 0;
-            char[] separators = {',' , '\n' };
-            string[] numbers = input.Split(separators);
+            string[] numbers;
             int sum = 0;
+            
+            if (input == "") return 0;
+            if (input.StartsWith("//"))
+            {
+                string numbersList = input.Substring(4, 3);
+                Console.Write(numbersList);
+
+                numbers = numbersList.Split(';');
+            }
+            else
+            {
+                char[] separators = {',', '\n'};
+                numbers = input.Split(separators);
+            }
+
             foreach (var item in numbers)
             {
                 bool isNumber = int.TryParse(item, out int result);
