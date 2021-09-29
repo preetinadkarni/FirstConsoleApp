@@ -19,7 +19,6 @@ namespace FirstConsoleApp
             {
                 sum += item;
             }
-            
             return sum;
         }
 
