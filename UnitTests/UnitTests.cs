@@ -42,5 +42,11 @@ namespace UnitTests
         {
             return _stringCalculator.Add(input);
         }
+        
+        [TestCase("//;\n1;2", ExpectedResult=3)]
+        public int GivenInputHasDelimiterWhenAddThenReturnsSumOfNumbers(string input)
+        {
+            return _stringCalculator.Add(input);
+        }
     }
 }
