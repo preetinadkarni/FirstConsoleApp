@@ -1,3 +1,4 @@
+using System;
 using FirstConsoleApp;
 using NUnit.Framework;
 
@@ -43,11 +44,11 @@ namespace UnitTests
             return _stringCalculator.Add(input);
         }
         
-        [TestCase("//;\n1;2", ExpectedResult=3)]
-        [TestCase("//:\n3:5:3:9", ExpectedResult=20)]
-        public int GivenInputHasDelimiterWhenAddThenReturnsSumOfNumbers(string input)
+        [Test]
+        public void GivenInputHasNegativeNumberWhenAddThenReturnsAnException()
         {
-            return _stringCalculator.Add(input);
+            Exception ex = Assert.Throws<System.ArgumentException>(delegate() { _stringCalculator.Add("-1,2,-3");});
+            Assert.AreEqual(ex.Message,"Negatives not allowed: -1, -3");
         }
     }
 }
