@@ -1,3 +1,4 @@
+using System;
 using FirstConsoleApp;
 using NUnit.Framework;
 
@@ -42,5 +43,6 @@ namespace UnitTests
         {
             return _stringCalculator.Add(input);
         }
+        
     }
 }
