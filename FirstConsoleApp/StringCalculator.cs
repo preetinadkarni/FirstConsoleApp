@@ -32,8 +32,8 @@ namespace FirstConsoleApp
         private int[] GetNumbers(string input)
         {
             string[] numbers;
-            bool isSeparatorSpecifiedinInput = input.StartsWith("//");
-            if (isSeparatorSpecifiedinInput)
+            bool isSeparatorSpecifiedInInput = input.StartsWith("//");
+            if (isSeparatorSpecifiedInInput)
             {
                 string separator = GetSeparator(input);
                 string numbersList = GetNumbersFromInput(input);
