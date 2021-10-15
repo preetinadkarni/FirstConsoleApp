@@ -12,24 +12,31 @@ namespace FirstConsoleApp
         {
             if (!input.Any(Char.IsDigit)) return 0;
 
-            int[] numbers = GetNumbersArray(input);
+            int[] numbers = GetNumbers(input);
             int sum = 0;
 
-            foreach (var item in numbers)
+            int[] negativeNumbers = GetNegativeNumbers(numbers);
+            
+            if(negativeNumbers.Length > 0 )
             {
-                sum += item;
+                throw new ArgumentException("Negatives not allowed: " + string.Join(", ", negativeNumbers));
             }
-            return sum;
+            return numbers.Sum();
         }
 
-        private int[] GetNumbersArray(string input)
+        private static int[] GetNegativeNumbers(int[] numbers)
+        {
+            return Array.FindAll(numbers, n => n < 0);
+        }
+
+        private int[] GetNumbers(string input)
         {
             string[] numbers;
             bool isSeparatorSpecifiedinInput = input.StartsWith("//");
             if (isSeparatorSpecifiedinInput)
             {
                 string separator = GetSeparator(input);
-                var numbersList = GetNumbersList(input);
+                string numbersList = GetNumbersFromInput(input);
                 numbers = numbersList.Split(separator);
             }
             else
@@ -41,14 +48,14 @@ namespace FirstConsoleApp
             return Array.ConvertAll(numbers,int.Parse);
         }
 
-        private string GetNumbersList(string input)
+        private string GetNumbersFromInput(string input)
         {
             int startIndex = input.IndexOf('\n') + 1;
             string numbersList = input.Substring(startIndex);
             return numbersList;
         }
 
-        private string GetSeparator(string input)
+        private string GetSeparator(string input) 
         {
             return input.Substring(2,1);
         }
