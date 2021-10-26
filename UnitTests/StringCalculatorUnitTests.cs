@@ -52,7 +52,7 @@ namespace UnitTests
         }
         
         [TestCase("1000,1001,2", ExpectedResult=2)]
-        public int GivenInputHasNumbersGreaterThanThousandWhenAddThenReturnsSumOfNumbers(string input)
+        public int GivenInputHasNumbersGreaterThanThousandWhenAddThenIgnoreThemInSum(string input)
         {
             return _stringCalculator.Add(input);
         }

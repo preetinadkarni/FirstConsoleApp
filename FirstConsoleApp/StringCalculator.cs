@@ -21,12 +21,19 @@ namespace FirstConsoleApp
             {
                 throw new ArgumentException("Negatives not allowed: " + string.Join(", ", negativeNumbers));
             }
+
+            numbers = RemoveNumbersGreaterThanThousand(numbers);
             return numbers.Sum();
         }
 
         private static int[] GetNegativeNumbers(int[] numbers)
         {
             return Array.FindAll(numbers, n => n < 0);
+        }
+
+        private static int[] RemoveNumbersGreaterThanThousand(int[] numbers)
+        {
+            return Array.FindAll(numbers, n => n < 1000);
         }
 
         private int[] GetNumbers(string input)
