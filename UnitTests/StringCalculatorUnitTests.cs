@@ -56,5 +56,11 @@ namespace UnitTests
         {
             return _stringCalculator.Add(input);
         }
+        
+        [TestCase("//[***]\n1***2***3", ExpectedResult=6)]
+        public int GivenInputHasDelimiterOfAnyLengthWhenAddThenReturnSum(string input)
+        {
+            return _stringCalculator.Add(input);
+        }
     }
 }
