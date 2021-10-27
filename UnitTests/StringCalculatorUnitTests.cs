@@ -47,7 +47,7 @@ namespace UnitTests
         [Test]
         public void GivenInputHasNegativeNumberWhenAddThenReturnsAnException()
         {
-            Exception ex = Assert.Throws<System.ArgumentException>(delegate() { _stringCalculator.Add("-1,2,-3");});
+            Exception ex = Assert.Throws<System.ArgumentException>(() => { _stringCalculator.Add("-1,2,-3");});
             Assert.AreEqual(ex.Message,"Negatives not allowed: -1, -3");
         }
         
