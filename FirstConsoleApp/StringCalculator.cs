@@ -21,6 +21,8 @@ namespace FirstConsoleApp
             {
                 throw new ArgumentException("Negatives not allowed: " + string.Join(", ", negativeNumbers));
             }
+
+            numbers = RemoveNumbersGreaterThanThousand(numbers);
             return numbers.Sum();
         }
 
@@ -29,13 +31,18 @@ namespace FirstConsoleApp
             return Array.FindAll(numbers, n => n < 0);
         }
 
+        private static int[] RemoveNumbersGreaterThanThousand(int[] numbers)
+        {
+            return Array.FindAll(numbers, n => n < 1000);
+        }
+
         private int[] GetNumbers(string input)
         {
             string[] numbers;
             bool isSeparatorSpecifiedInInput = input.StartsWith("//");
             if (isSeparatorSpecifiedInInput)
             {
-                string separator = GetSeparator(input);
+                string separator = GetDelimiter(input);
                 string numbersList = GetNumbersFromInput(input);
                 numbers = numbersList.Split(separator);
             }
@@ -55,9 +62,17 @@ namespace FirstConsoleApp
             return numbersList;
         }
 
-        private string GetSeparator(string input) 
+        private string GetDelimiter(string input) 
         {
-            return input.Substring(2,1);
+            if (input.IndexOf('[') > 0)
+            {
+                int startIndex = input.IndexOf('[') + 1;
+                int endIndex = input.IndexOf(']');
+                string inputDelimiters = input.Substring(startIndex,  endIndex - startIndex);
+                return inputDelimiters;
+            }
+
+            return input.Substring(2, 1);
         }
         
     }

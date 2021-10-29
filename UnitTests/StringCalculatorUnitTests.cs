@@ -47,8 +47,20 @@ namespace UnitTests
         [Test]
         public void GivenInputHasNegativeNumberWhenAddThenReturnsAnException()
         {
-            Exception ex = Assert.Throws<System.ArgumentException>(delegate() { _stringCalculator.Add("-1,2,-3");});
+            Exception ex = Assert.Throws<System.ArgumentException>(() => { _stringCalculator.Add("-1,2,-3");});
             Assert.AreEqual(ex.Message,"Negatives not allowed: -1, -3");
+        }
+        
+        [TestCase("1000,1001,2", ExpectedResult=2)]
+        public int GivenInputHasNumbersGreaterThanThousandWhenAddThenIgnoreThemInSum(string input)
+        {
+            return _stringCalculator.Add(input);
+        }
+        
+        [TestCase("//[***]\n1***2***3", ExpectedResult=6)]
+        public int GivenInputHasDelimiterOfAnyLengthWhenAddThenReturnSum(string input)
+        {
+            return _stringCalculator.Add(input);
         }
     }
 }
