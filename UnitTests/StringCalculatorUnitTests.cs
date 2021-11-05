@@ -64,6 +64,7 @@ namespace UnitTests
         }
         
         [TestCase("//[*][%]\n1*2%3", ExpectedResult=6)]
+        [TestCase("//[*1*][%]\n1*1*2%3", ExpectedResult=6)]
         public int GivenInputHasMultipleDelimitersWhenAddThenReturnSum(string input)
         {
             return _stringCalculator.Add(input);

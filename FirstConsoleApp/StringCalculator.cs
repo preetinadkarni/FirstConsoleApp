@@ -1,5 +1,6 @@
 using System.Net.Sockets;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FirstConsoleApp
@@ -42,14 +43,14 @@ namespace FirstConsoleApp
             bool isSeparatorSpecifiedInInput = input.StartsWith("//");
             if (isSeparatorSpecifiedInInput)
             {
-                string separator = GetDelimiter(input);
+                string[] separators = GetDelimiter(input);
                 string numbersList = GetNumbersFromInput(input);
-                numbers = numbersList.Split(separator);
+                numbers = numbersList.Split(separators, StringSplitOptions.None);
             }
             else
             {
-                char[] defaultSeparators = {',', '\n'};
-                numbers = input.Split(defaultSeparators);
+                string[] defaultSeparators = {",", "\n"};
+                numbers = input.Split(defaultSeparators,  StringSplitOptions.None);
             }
 
             return Array.ConvertAll(numbers,int.Parse);
@@ -62,17 +63,29 @@ namespace FirstConsoleApp
             return numbersList;
         }
 
-        private string GetDelimiter(string input) 
+        private string[] GetDelimiter(string input)
         {
-            if (input.IndexOf('[') > 0)
+            List<string> delimiters = new List<string>();
+            bool hasMultipleDelimiters = input.IndexOf('[') > 0;
+            if (hasMultipleDelimiters)
             {
-                int startIndex = input.IndexOf('[') + 1;
-                int endIndex = input.IndexOf(']');
-                string inputDelimiters = input.Substring(startIndex,  endIndex - startIndex);
-                return inputDelimiters;
-            }
+                int startIndex = input.IndexOf('[');
+                int endIndex = input.LastIndexOf(']') + 1 ;
+                string allDelimitersInInput = input.Substring(startIndex,endIndex - startIndex );
 
-            return input.Substring(2, 1);
+                int startIndexDelimiter = 1 ;
+                while (startIndexDelimiter < allDelimitersInInput.Length)
+                {
+                    int endIndexDelimiter = allDelimitersInInput.IndexOf(']',startIndexDelimiter);
+                    string inputDelimiters = allDelimitersInInput.Substring(startIndexDelimiter, endIndexDelimiter-startIndexDelimiter);
+                    delimiters.Add(inputDelimiters);
+                    startIndexDelimiter = endIndexDelimiter + 2;
+                }
+            }
+            else
+                delimiters.Add(input.Substring(2, 1));
+
+            return delimiters.ToArray();
         }
         
     }
