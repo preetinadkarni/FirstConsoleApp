@@ -27,12 +27,12 @@ namespace FirstConsoleApp
             return numbers.Sum();
         }
 
-        private static int[] GetNegativeNumbers(int[] numbers)
+        private int[] GetNegativeNumbers(int[] numbers)
         {
             return Array.FindAll(numbers, n => n < 0);
         }
 
-        private static int[] RemoveNumbersGreaterThanThousand(int[] numbers)
+        private int[] RemoveNumbersGreaterThanThousand(int[] numbers)
         {
             return Array.FindAll(numbers, n => n < 1000);
         }
@@ -69,26 +69,29 @@ namespace FirstConsoleApp
             bool hasMultipleDelimiters = input.IndexOf('[') > 0;
             if (hasMultipleDelimiters)
             {
-                int startIndex = input.IndexOf('[');
-                int endIndex = input.LastIndexOf(']') + 1 ;
-                string allDelimitersInInput = input.Substring(startIndex,endIndex - startIndex );
+                string allDelimitersInInput = GetAllDelimitersInInputAsString(input);
+                delimiters = GetMultipleDelimitersInAnArray(allDelimitersInInput);
 
-                int startIndexDelimiter = 1 ;
-                while (startIndexDelimiter < allDelimitersInInput.Length)
-                {
-                    int endIndexDelimiter = allDelimitersInInput.IndexOf(']',startIndexDelimiter);
-                    string inputDelimiters = allDelimitersInInput.Substring(startIndexDelimiter, endIndexDelimiter-startIndexDelimiter);
-                    delimiters.Add(inputDelimiters);
-                    startIndexDelimiter = endIndexDelimiter + 2;
-                }
             }
             else
                 delimiters.Add(input.Substring(2, 1));
 
             return delimiters.ToArray();
         }
+        private string GetAllDelimitersInInputAsString(string input)
+        {
+            int startIndex = input.IndexOf('[');
+            int endIndex = input.LastIndexOf(']') + 1 ;
+            return input.Substring(startIndex,endIndex - startIndex );
+        }
+
+        private List<string> GetMultipleDelimitersInAnArray(string allDelimiters)
+        {
+             List<string> delimiters;
+             delimiters = new List<string>(allDelimiters.Split('[',']'));
+             delimiters.Remove("");
+             return delimiters;
+        }
         
     }
-    
-    
 }
