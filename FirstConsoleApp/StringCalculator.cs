@@ -14,46 +14,49 @@ namespace FirstConsoleApp
             if (!input.Any(Char.IsDigit)) return 0;
 
             int[] numbers = GetNumbers(input);
-            int sum = 0;
-
-            int[] negativeNumbers = GetNegativeNumbers(numbers);
+            CheckInputHasNegativeNumbers(numbers);
             
-            if(negativeNumbers.Length > 0 )
-            {
-                throw new ArgumentException("Negatives not allowed: " + string.Join(", ", negativeNumbers));
-            }
-
-            numbers = RemoveNumbersGreaterThanThousand(numbers);
             return numbers.Sum();
         }
 
+        private void CheckInputHasNegativeNumbers(int[] numbers)
+        {
+            int[] negativeNumbers = GetNegativeNumbers(numbers);
+
+            if (negativeNumbers.Length > 0)
+            {
+                throw new ArgumentException("Negatives not allowed: " + string.Join(", ", negativeNumbers));
+            }
+        }
         private int[] GetNegativeNumbers(int[] numbers)
         {
             return Array.FindAll(numbers, n => n < 0);
         }
 
-        private int[] RemoveNumbersGreaterThanThousand(int[] numbers)
+        private int[] GetNumbersLessThanThousand(int[] numbers)
         {
             return Array.FindAll(numbers, n => n < 1000);
         }
 
         private int[] GetNumbers(string input)
         {
-            string[] numbers;
-            bool isSeparatorSpecifiedInInput = input.StartsWith("//");
-            if (isSeparatorSpecifiedInInput)
+            string[] sNumbers;
+            bool isDelimiterSpecifiedInInput = input.StartsWith("//");
+            if (isDelimiterSpecifiedInInput)
             {
-                string[] separators = GetDelimiter(input);
+                string[] delimiters = GetDelimiters(input);
                 string numbersList = GetNumbersFromInput(input);
-                numbers = numbersList.Split(separators, StringSplitOptions.None);
+                sNumbers = numbersList.Split(delimiters, StringSplitOptions.None);
             }
             else
             {
-                string[] defaultSeparators = {",", "\n"};
-                numbers = input.Split(defaultSeparators,  StringSplitOptions.None);
+                string[] defaultDelimiters = {",", "\n"};
+                sNumbers = input.Split(defaultDelimiters,  StringSplitOptions.None);
             }
 
-            return Array.ConvertAll(numbers,int.Parse);
+            int[] iNumbers = Array.ConvertAll(sNumbers, int.Parse);
+            iNumbers = GetNumbersLessThanThousand(iNumbers);
+            return iNumbers;
         }
 
         private string GetNumbersFromInput(string input)
@@ -63,14 +66,13 @@ namespace FirstConsoleApp
             return numbersList;
         }
 
-        private string[] GetDelimiter(string input)
+        private string[] GetDelimiters(string input)
         {
             List<string> delimiters = new List<string>();
             bool hasMultipleDelimiters = input.IndexOf('[') > 0;
             if (hasMultipleDelimiters)
             {
-                string allDelimitersInInput = GetAllDelimitersInInputAsString(input);
-                delimiters = GetMultipleDelimitersInAnArray(allDelimitersInInput);
+                delimiters = GetMultipleDelimitersInAnArray(input);
 
             }
             else
@@ -78,19 +80,16 @@ namespace FirstConsoleApp
 
             return delimiters.ToArray();
         }
-        private string GetAllDelimitersInInputAsString(string input)
+
+        private List<string> GetMultipleDelimitersInAnArray(string input)
         {
             int startIndex = input.IndexOf('[');
             int endIndex = input.LastIndexOf(']') + 1 ;
-            return input.Substring(startIndex,endIndex - startIndex );
-        }
-
-        private List<string> GetMultipleDelimitersInAnArray(string allDelimiters)
-        {
-             List<string> delimiters;
-             delimiters = new List<string>(allDelimiters.Split('[',']'));
-             delimiters.Remove("");
-             return delimiters;
+            string allDelimitersInInput = input.Substring(startIndex,endIndex - startIndex );
+            
+            List<string> delimiters = new List<string>(allDelimitersInInput.Split('[',']'));
+            delimiters.Remove("");
+            return delimiters;
         }
         
     }
